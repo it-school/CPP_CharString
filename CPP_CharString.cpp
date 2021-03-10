@@ -11,8 +11,7 @@ void part1()
 
 void part2()
 {
-	char c;
-	// ѕечать всех символов таблицы ASCII
+	// печать всех символов таблицы ASCII
 	for (int i = 0; i <= 255; i++)
 	{
 		//c = i;
@@ -37,7 +36,6 @@ void part3()
 	// preprocessing to remove spaces
 	for (size_t i = 0; i < strlen(s); i++)
 	{
-
 		if (isspace(s[i]))
 		{
 			for (size_t j = i; j < strlen(s); j++)
@@ -47,10 +45,8 @@ void part3()
 		}
 	}
 
-
 	cout << endl << s;
 	cout << endl << strlen(s);
-
 
 	//cout << endl << s[25];
 	bool flag = true;
@@ -206,21 +202,41 @@ void part5()
 
 void part6()
 {
+	string s = "Hello";
+	cout << isascii(s[0]) << endl;
+	cout << isalnum(s[0]) << endl;
+	cout << isalpha(s[0]) << endl;
+	cout << isdigit(s[0]) << endl;
+	cout << ispunct(s[0]) << endl;
+	cout << iswupper(s[0]) << endl;
+	cout << iswlower(s[0]) << endl;
+}
+
+void part7()
+{
 	cout << endl << endl << "Processing string type:" << endl;
 
-	string s1 = "123", s2 = "456qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", s3;
-	cout << (s1 + s2).length();
-	cout << endl << (s3 = s1 + s2).c_str();
-	cout << "\nSymbol 4 is at " << s3.find_first_of('4', 0);
+	string s1 = "123", s2 = "456qqqw", s3;
+	cout << "s1: \t\t\t" << s1 << endl << "s2: \t\t\t" << s2 << endl;
+	cout << "Concatenated string: \t" << s1 + s2 << endl;
+	//s1.append(s2);
+	cout << "Total length of s1 and s2 is " << (s1 + s2).length();
+
+	cout << endl << endl << (s3 = s1 + s2).c_str();
+
+
+	cout << "\nSymbol 'q' from the beginning is at " << s3.find_first_of('q', 0);
+	cout << "\nSymbol 'q' from ending is at " << s3.find_last_of('q');
 
 	cout << endl << s3.c_str();
-	s3.replace(1, 3, "ww", 3);
+	//s3.replace(1, 3, "wwwwwww");
+	s3.replace(1, 3, "wwwwwww", 5);
 	cout << endl << s3.c_str();
 
 	cout << endl;
 	char douplicates[] = { ' ', ',' , '-', ';' };
 	unsigned int dsize = sizeof(douplicates);
-	string s = "!This is an example,it is beautiful.     Ready ?    Let's try to correct it   . Go!";
+	string s = "!This is an example,it is beautiful...     Ready ?    Let's try to correct it   . Go!";
 	cout << s.c_str();
 
 
@@ -244,39 +260,86 @@ void part6()
 	return;
 }
 
-void part7()
-{
-
-}
-
 void part8()
 {
+	setlocale(0, "ru");
+	cout << "Является ли строка идентификатором" << endl << "Определить, является ли введенное слово идентификатором, т.е. " <<
+		"начинается ли оно с английской буквы в любом регистре или знака подчеркивания и не содержит других символов, " <<
+		"кроме букв английского алфавита (в любом регистре), цифр и знака подчеркивания." << endl;
 
+	string identificator = "_1";
+	bool isIdentificator = true;
+	if (isalpha(identificator[0]) || identificator[0] == '_')
+	{
+		for (size_t i = 1; i < identificator.size(); i++)
+		{
+			// cout << identificator[i];
+			if (!(isalnum(identificator[i]) || identificator[i] == '_'))
+			{
+				isIdentificator = false;
+				break;
+			}
+		}
+	}
+	else
+	{
+		isIdentificator = false;
+	}
+
+	cout << identificator << " is " << (!isIdentificator ? "NOT " : "") << "identificator";
+	/*
+	if (isIdentificator)
+	{
+		cout << identificator << " is identificator";
+	}
+	else
+	{
+		cout << identificator << " is NOT identificator";
+	}
+	*/
 }
 
 void part9()
 {
+	// Удалить из строки пробелы и определить, является ли она перевертышем
+	string sentence = "No Lemon   ,	no Melon";
+	cout << endl << sentence;
 
-}
+	for (size_t i = 0; i < sentence.size(); i++)
+	{
+		if (isspace(sentence[i]) || ispunct(sentence[i]))
+		{
+			sentence.erase(i--, 1);
+		}
+	}
+	cout << endl << sentence;
 
-void part10()
-{
+	bool isPalindrome = true;
+	string reversed = sentence;
+	for (size_t i = 0; i < sentence.size() / 2; i++)
+	{
+		reversed[i] = sentence[sentence.size() - i - 1];
+	}
+	cout << endl << reversed;
 
+	cout << endl << sentence << (_strcmpi(sentence.c_str(), reversed.c_str()) ? " is NOT " : " is ") << "palindrome";
 }
 
 
 int main()
 {
+	// char
 	part1();
 	part2();
 	part3();
 	part4();
 	part5();
-	//	part6();
-	//	part7();
-	//	part8();
-	//	part9();
-	//	part10();
+
+	// string
+	part6();
+	part7();
+	part8();
+	part9();
 
 	/*
 	char number[] = "123 234";
